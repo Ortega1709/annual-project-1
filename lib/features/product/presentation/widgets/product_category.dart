@@ -231,7 +231,7 @@ class _ProductCategoryState extends State<ProductCategory> {
                 });
               },
             ),
-            SizedBox(width: size.isMobile ? AppDimen.p16 : AppDimen.p32)
+            SizedBox(width: size.isMobile ? AppDimen.p16 : AppDimen.p32),
           ],
         ),
       );

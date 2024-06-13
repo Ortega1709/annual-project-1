@@ -19,8 +19,9 @@ class ProductPromo extends StatelessWidget {
         padding: EdgeInsets.symmetric(
             horizontal: size.isMobile ? AppDimen.p16 : AppDimen.p32),
         child: Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             color: AppColor.cyanColor,
+            borderRadius: BorderRadius.circular(AppDimen.p12)
           ),
           child: Padding(
             padding: EdgeInsets.symmetric(

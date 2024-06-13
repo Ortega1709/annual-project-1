@@ -2,7 +2,9 @@ import 'package:e_commerce/core/shared/widgets/m_icon_button.dart';
 import 'package:e_commerce/core/theme/app_color.dart';
 import 'package:e_commerce/core/theme/app_dimen.dart';
 import 'package:e_commerce/features/product/presentation/widgets/product_category.dart';
+import 'package:e_commerce/features/product/presentation/widgets/product_for_you_list.dart';
 import 'package:e_commerce/features/product/presentation/widgets/product_promo.dart';
+import 'package:e_commerce/features/product/presentation/widgets/product_title.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -21,6 +23,13 @@ class _ProductDiscoveryState extends State<ProductDiscovery> {
     return ResponsiveBuilder(builder: (context, size) {
       return Scaffold(
         appBar: AppBar(
+          title: Text(
+            "E-commerce",
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge
+                ?.copyWith(fontWeight: FontWeight.bold, color: AppColor.primaryColor),
+          ),
           actions: [
             MIconButton(
               icon: CupertinoIcons.person,
@@ -36,17 +45,28 @@ class _ProductDiscoveryState extends State<ProductDiscovery> {
             SizedBox(width: size.isMobile ? AppDimen.p16 : AppDimen.p32)
           ],
         ),
-        body: Scrollbar(
-          child: SingleChildScrollView(
-            child: Column(
+        body: ListView(
+          shrinkWrap: true,
+          children: [
+            Column(
               children: [
                 SizedBox(height: size.isMobile ? AppDimen.p16 : AppDimen.p32),
                 const ProductPromo(),
                 SizedBox(height: size.isMobile ? AppDimen.p16 : AppDimen.p32),
-                const ProductCategory(categories: [])
+                const ProductCategory(
+                  categories: [],
+                ),
+                SizedBox(height: size.isMobile ? AppDimen.p16 : AppDimen.p32),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: size.isMobile ? AppDimen.p16 : AppDimen.p32,
+                  ),
+                  child: const ProductTitle(title: "Aliments disponibles"),
+                ),
+                const ProductForYouList()
               ],
             ),
-          ),
+          ],
         ),
       );
     });

@@ -22,11 +22,11 @@ class MCategoryChip extends StatelessWidget {
       builder: (context, size) {
         return InkWell(
           onTap: onPressed,
-          borderRadius: BorderRadius.zero,
+          borderRadius: BorderRadius.circular(AppDimen.p8),
           child: Container(
             decoration: BoxDecoration(
               color: selected ? AppColor.primaryColor: AppColor.grayColor,
-              borderRadius: BorderRadius.zero
+              borderRadius: BorderRadius.circular(AppDimen.p8)
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppDimen.p12, vertical: AppDimen.p4),

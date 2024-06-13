@@ -18,7 +18,6 @@ class MButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        fixedSize: const Size(395, Constants.kHeiSizeButton),
         backgroundColor: AppColor.primaryColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppDimen.p32),
