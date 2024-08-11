@@ -9,5 +9,4 @@ class Constants {
 
   static const kHeiSizeButton = 47.0;
   static Locale locale = Locale(Platform.localeName.substring(0, 2));
-  
 }

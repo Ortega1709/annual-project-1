@@ -1,0 +1,35 @@
+{
+  "id": "ijoxmvqh1ggz6x7",
+  "created": "2024-07-06 17:04:53.871Z",
+  "updated": "2024-07-06 17:05:12.833Z",
+  "collectionId": "eyjz4n9a3vlmntj",
+  "collectionName": "histovaleur",
+  "expand": {
+    "produitid": {
+      "id": "d4ugutgt1111pup",
+      "created": "2024-07-06 17:04:03.058Z",
+      "updated": "2024-07-06 17:04:03.058Z",
+      "collectionId": "eu8d7xo7jdqvaxd",
+      "collectionName": "descproduit",
+      "expand": {
+        "categorynum": {
+          "id": "vt7yjnrwrig2s37",
+          "created": "2024-07-06 16:40:50.087Z",
+          "updated": "2024-07-06 16:53:42.554Z",
+          "collectionId": "sdnivousp26k1qx",
+          "collectionName": "enumcategories",
+          "expand": {},
+          "name": "Pâtisserie"
+        }
+      },
+      "categorynum": "vt7yjnrwrig2s37",
+      "description": "Les langues-de-chat, ou langues de chat, sont des biscuits à la forme oblongue d'origine française, d'une longueur de cinq à huit centimètres, plus ou moins allongés, qui datent peut-être du XVIIᵉ siècle.",
+      "image": "t_l_chargement_1_OaSS6lJeap.jpeg",
+      "name": "Langue de chat",
+      "seuilrupture": 100
+    }
+  },
+  "prix": 15.99,
+  "produitid": "d4ugutgt1111pup",
+  "valuedate": "2024-07-06 12:00:00.000Z"
+}

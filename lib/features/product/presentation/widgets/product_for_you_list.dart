@@ -10,25 +10,6 @@ class ProductForYouList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ResponsiveGridList(
-          shrinkWrap: true,
-          horizontalGridMargin: 50,
-          verticalGridMargin: 50,
-          minItemsPerRow: 1,
-          maxItemsPerRow: 6,
-          minItemWidth: 10,
-          children: List.generate(
-            20,
-            (index) => ProductItem(
-              title: "Produit $index",
-              description: "Description $index",
-              price: "Price $index",
-              onPressed: () {
-                context.push('/products/$index');
-              },
-            ),
-          ),
-        ),
       ],
     );
   }
