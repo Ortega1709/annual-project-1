@@ -4,7 +4,6 @@ import 'package:e_commerce/features/cart/presentation/screens/cart_list_screen.d
 import 'package:e_commerce/features/product/domain/entities/product.dart';
 import 'package:e_commerce/features/product/presentation/screens/product_details_screen.dart';
 import 'package:e_commerce/features/product/presentation/screens/product_discovery_list_screen.dart';
-import 'package:e_commerce/features/product/presentation/screens/product_discovery_screen.dart';
 import 'package:e_commerce/features/product/presentation/screens/product_search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

@@ -1,3 +1,4 @@
+import 'package:e_commerce/core/utils/secrets.dart';
 import 'package:e_commerce/e-commerce-app.dart';
 import 'package:e_commerce/init_dependencies.dart';
 import 'package:flutter/material.dart';

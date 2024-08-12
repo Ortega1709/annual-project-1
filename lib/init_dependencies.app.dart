@@ -4,6 +4,7 @@ final serviceLocator = GetIt.asNewInstance();
 
 Future<void> initDependencies() async {
   await dotenv.load();
+  Stripe.publishableKey = Secrets.stripePublishKey;
 
 
   _initSVG();

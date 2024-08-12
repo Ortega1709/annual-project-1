@@ -15,6 +15,7 @@ import 'package:e_commerce/features/product/domain/repositories/product_reposito
 import 'package:e_commerce/features/product/domain/usecases/get_products.dart';
 import 'package:e_commerce/features/product/domain/usecases/get_products_by_category_num.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';

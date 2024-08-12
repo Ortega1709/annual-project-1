@@ -5,6 +5,7 @@ import 'package:e_commerce/core/theme/app_dimen.dart';
 import 'package:e_commerce/core/utils/messages.dart';
 import 'package:e_commerce/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:e_commerce/features/cart/presentation/widgets/cart_list.dart';
+import 'package:e_commerce/features/cart/services/stripe_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,7 +26,6 @@ class _CartListScreenState extends State<CartListScreen> {
   void onGooglePayResult(paymentResult) {
     debugPrint(paymentResult.toString());
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -56,11 +56,13 @@ class _CartListScreenState extends State<CartListScreen> {
         },
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(AppDimen.p16),
-        child: MButton(
-          onPressed: () {}, text: '',
-        )
-      ),
+          padding: const EdgeInsets.all(AppDimen.p16),
+          child: MButton(
+            onPressed: () async {
+              await StripeService.instance.makePayment(context);
+            },
+            text: 'Commander',
+          )),
     );
   }
 }
