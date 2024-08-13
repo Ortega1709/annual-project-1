@@ -66,12 +66,13 @@ class ProductPromo extends StatelessWidget {
                     ],
                   )),
               Expanded(
-                  child: AspectRatio(
-                aspectRatio: 16.0 / 9.0,
-                child: SvgPicture.asset(
-                  'assets/svg/vegetable-2.svg',
+                child: AspectRatio(
+                  aspectRatio: 16.0 / 9.0,
+                  child: SvgPicture.asset(
+                    'assets/svg/vegetable-2.svg',
+                  ),
                 ),
-              ))
+              )
             ],
           ),
         ),

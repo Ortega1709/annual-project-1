@@ -26,6 +26,7 @@ void _initSVG() async {
   await preloadSVG([
     'assets/svg/vegetable-1.svg',
     'assets/svg/vegetable-2.svg',
+    'assets/svg/vegetable-3.svg',
   ]);
 }
 

@@ -14,7 +14,7 @@ import '../features/index.dart';
 
 class AppRouterConfig {
   late final router = GoRouter(
-    initialLocation: '/',
+    initialLocation: '/login',
     routes: [
       GoRoute(
         path: '/',
