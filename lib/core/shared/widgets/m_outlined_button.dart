@@ -23,21 +23,23 @@ class MOutlinedButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          fixedSize: const Size(395, Constants.kHeiSizeButton),
           backgroundColor: AppColor.transparentColor,
           shadowColor: AppColor.transparentColor,
           surfaceTintColor: AppColor.transparentColor,
           shape: RoundedRectangleBorder(
             side: const BorderSide(color: AppColor.greyColor),
-            borderRadius: BorderRadius.circular(AppDimen.p12),
+            borderRadius: BorderRadius.circular(AppDimen.p32),
           ),
         ),
-        child: Text(
-          text,
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge
-              ?.copyWith(color: AppColor.primaryColor),
+        child: Padding(
+          padding: const EdgeInsets.all(AppDimen.p12),
+          child: Text(
+            text,
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge
+                ?.copyWith(color: AppColor.primaryColor),
+          ),
         ),
       ),
     );

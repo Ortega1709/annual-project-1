@@ -9,7 +9,7 @@ class GoogleSignInService {
     try {
       return _googleSignIn.signIn();
     } catch (e) {
-      print('Error signing in with Google: $e');
+      // print('Error signing in with Google: $e');
       return null;
     }
   }
