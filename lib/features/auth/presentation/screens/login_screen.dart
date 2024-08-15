@@ -31,13 +31,12 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: const EdgeInsets.all(AppDimen.p16),
               child: AspectRatio(
-                aspectRatio: 1,
-                child: ClipOval(
-                  child: SvgPicture.asset(
-                    'assets/svg/vegetable-3.svg',
-                  ),
-                )
-              ),
+                  aspectRatio: 1,
+                  child: ClipOval(
+                    child: SvgPicture.asset(
+                      'assets/svg/vegetable-3.svg',
+                    ),
+                  )),
             ),
             const SizedBox(height: AppDimen.p24),
             Padding(
@@ -67,35 +66,45 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
       bottomNavigationBar: Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppDimen.p16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              MButton(
-                text: 'Continuer avec google',
-                onPressed: signIn,
-              ),
-              const SizedBox(height: AppDimen.p8),
-              MOutlinedButton(
-                text: 'Continuer sans compte',
-                onPressed: () {
-                  context.go('/');
-                },
-              ),
-            ],
-          )),
+        padding: const EdgeInsets.symmetric(vertical: AppDimen.p16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            MButton(
+              text: 'Continuer avec google',
+              onPressed: signIn,
+            ),
+            const SizedBox(height: AppDimen.p8),
+            MOutlinedButton(
+              text: 'Continuer sans compte',
+              onPressed: signOut,
+            ),
+          ],
+        ),
+      ),
     );
   }
 
   Future signIn() async {
     final user = await GoogleSignInService.instance.signIn();
     if (user == null) {
-      print("User is null");
       Messages.error("Authentifcation", "Error authentication", context);
     } else {
-      print("User is $user");
+      final GoogleSignInAuthentication googleAuth = await user.authentication;
+      if (googleAuth.accessToken != null) {
+      }
+
       Messages.success("Authentifcation", "Success authentication", context);
+    }
+  }
+
+  Future signOut() async {
+    final user = await GoogleSignInService.instance.signOut();
+    if (user == null) {
+      Messages.error("Authentifcation", "Success sign out", context);
+    } else {
+      Messages.success("Authentifcation", "Error sign out", context);
     }
   }
 }

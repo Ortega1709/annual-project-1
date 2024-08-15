@@ -1,6 +1,5 @@
 import 'package:e_commerce/features/account/presentation/screens/account_screen.dart';
 import 'package:e_commerce/features/product/presentation/screens/product_discovery_screen.dart';
-import 'package:e_commerce/features/product/presentation/screens/product_search_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -25,7 +24,6 @@ class _IndexState extends State<Index> {
   Widget build(BuildContext context) {
     const List<Widget> screens = [
       ProductDiscoveryScreen(),
-      //ProductSearchScreen(),
       AccountScreen()
     ];
 
@@ -53,13 +51,6 @@ class _IndexState extends State<Index> {
             ),
             label: "Aliments",
           ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(
-          //     FontAwesomeIcons.magnifyingGlass,
-          //     size: 20,
-          //   ),
-          //   label: "Recherche",
-          // ),
           BottomNavigationBarItem(
             icon: Icon(
               CupertinoIcons.person_solid,

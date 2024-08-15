@@ -1,6 +1,4 @@
 
-import 'dart:developer';
-
 import 'package:e_commerce/features/cart/data/datasources/cart_local_data_source.dart';
 import 'package:e_commerce/features/cart/data/models/cart_model.dart';
 import 'package:e_commerce/features/cart/data/repositories/cart_repository_impl.dart';

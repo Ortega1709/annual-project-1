@@ -1,14 +1,8 @@
-import 'package:e_commerce/core/shared/widgets/m_button.dart';
 import 'package:e_commerce/core/theme/app_color.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../../../core/theme/app_dimen.dart';
 

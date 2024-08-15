@@ -1,7 +1,5 @@
 import 'package:e_commerce/core/shared/widgets/m_category_chip.dart';
-import 'package:e_commerce/core/theme/app_dimen.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_builder/responsive_builder.dart';
 
 class ProductCategory extends StatefulWidget {
   final List<String> categories;

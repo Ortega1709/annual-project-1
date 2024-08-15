@@ -9,7 +9,16 @@ class GoogleSignInService {
     try {
       return _googleSignIn.signIn();
     } catch (e) {
-      // print('Error signing in with Google: $e');
+      print('Error signing in with Google: $e');
+      return null;
+    }
+  }
+
+  Future<GoogleSignInAccount?> signOut() async {
+    try {
+      return _googleSignIn.signOut();
+    } catch (e) {
+      print('Error signing out of Google: $e');
       return null;
     }
   }
