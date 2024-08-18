@@ -46,7 +46,7 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
 
         if (pocketUserList.items.isEmpty) {
           // if user does not exist in pocketbase, create a new user
-          sharedPreferences.setString('authentication_type', 'pending');
+          sharedPreferences.setBool('authentication', false);
 
           // register user email and name in shared preferences
           sharedPreferences.setString('email', googleUserEmail);
@@ -57,7 +57,7 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
         } else {
           // if user exists in pocketbase, update his authentication
           // type to authenticated and store his id
-          sharedPreferences.setString('authentication_type', 'authenticated');
+          sharedPreferences.setBool('authentication', true);
           sharedPreferences.setString('id', pocketUserList.items.first.id);
           return UserModel.fromJson(pocketUserList.items.first.data).copyWith(
               id: pocketUserList.items.first.id,
@@ -89,7 +89,7 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
       final userRegistered =
           await pocketBase.collection('users').create(body: userModel.toJson());
 
-      sharedPreferences.setString('authentication_type', 'authenticated');
+      sharedPreferences.setBool('authentication', true);
       sharedPreferences.setString('id', userRegistered.id);
 
       return UserModel.fromJson(userRegistered.data).copyWith(
