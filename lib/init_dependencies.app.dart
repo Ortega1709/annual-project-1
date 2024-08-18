@@ -17,12 +17,16 @@ Future<void> initDependencies() async {
 
   final cartBox = await Hive.openBox<CartModel>('cart');
   final sharedPreferences = await SharedPreferences.getInstance();
-
   final pocketbase = PocketBase(Secrets.pocketbaseUrl);
+
+  final userSessionManager = UserSessionManager(sharedPreferences);
+  final userSessionCubit = UserSessionCubit(userSessionManager);
 
   serviceLocator.registerLazySingleton(() => pocketbase);
   serviceLocator.registerLazySingleton(() => cartBox);
   serviceLocator.registerLazySingleton(() => sharedPreferences);
+  serviceLocator.registerLazySingleton(() => userSessionManager);
+  serviceLocator.registerLazySingleton(() => userSessionCubit);
 }
 
 void _initSVG() async {

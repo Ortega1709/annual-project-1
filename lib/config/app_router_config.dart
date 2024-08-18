@@ -1,3 +1,4 @@
+import 'package:e_commerce/core/shared/cubits/user_session_cubit.dart';
 import 'package:e_commerce/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:e_commerce/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:e_commerce/features/cart/presentation/screens/cart_list_screen.dart';
@@ -13,7 +14,10 @@ import '../core/theme/app_color.dart';
 import '../features/index.dart';
 
 class AppRouterConfig {
-  late final router = GoRouter(
+  final UserSessionCubit userSessionCubit;
+  AppRouterConfig(this.userSessionCubit);
+
+  GoRouter get router => GoRouter(
     initialLocation: '/sign-in',
     routes: [
       GoRoute(
@@ -99,5 +103,17 @@ class AppRouterConfig {
         },
       ),
     ],
+    redirect: (context, state) {
+          final bool isLoggedIn = userSessionCubit.state;
+          final isGoingToSignIn = state.matchedLocation == '/sign-in';
+
+          if (!isLoggedIn && !isGoingToSignIn) {
+            return '/sign-in';
+          }
+          if (isLoggedIn && isGoingToSignIn) {
+            return '/home';
+          }
+          return null;
+        },
   );
 }
