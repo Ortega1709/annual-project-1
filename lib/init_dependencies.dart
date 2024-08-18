@@ -1,4 +1,10 @@
 
+import 'package:e_commerce/features/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:e_commerce/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:e_commerce/features/auth/domain/repositories/auth_repository.dart';
+import 'package:e_commerce/features/auth/domain/usecases/sign_in.dart';
+import 'package:e_commerce/features/auth/domain/usecases/sign_up.dart';
+import 'package:e_commerce/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:e_commerce/features/cart/data/datasources/cart_local_data_source.dart';
 import 'package:e_commerce/features/cart/data/models/cart_model.dart';
 import 'package:e_commerce/features/cart/data/repositories/cart_repository_impl.dart';
@@ -18,6 +24,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pocketbase/pocketbase.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/utils/preload_svg.dart';
 import 'core/utils/secrets.dart';

@@ -1,10 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_commerce/core/shared/widgets/m_button.dart';
 import 'package:e_commerce/core/theme/app_color.dart';
 import 'package:e_commerce/core/theme/app_dimen.dart';
 import 'package:e_commerce/core/utils/secrets.dart';
 import 'package:e_commerce/features/product/domain/entities/product.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/shared/widgets/progress.dart';

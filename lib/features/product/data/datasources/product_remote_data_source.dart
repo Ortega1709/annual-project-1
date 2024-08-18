@@ -6,9 +6,7 @@ import 'package:pocketbase/pocketbase.dart';
 
 abstract interface class ProductRemoteDataSource {
   Future<List<ProductModel>> getAllProducts();
-
   Future<List<ProductModel>> getAllProductsOrderBy({required String name});
-
   Future<List<ProductModel>> getAllProductsByCategoryNum({
     required int categoryNum,
   });
@@ -22,16 +20,11 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   @override
   Future<List<ProductModel>> getAllProducts() async {
     try {
-      final response = await pocketBase.collection('histovaleur').getList(
-          page: 1,
-          perPage: 20,
-          expand: "produitid.categorynum"
-      );
+      final response = await pocketBase
+          .collection('histovaleur')
+          .getList(page: 1, perPage: 20, expand: "produitid.categorynum");
 
-      return response.items
-          .map((e) => ProductModel.fromJson(e))
-          .toList();
-
+      return response.items.map((e) => ProductModel.fromJson(e)).toList();
     } catch (e) {
       log(e.toString());
       throw ServerException(e.toString());
@@ -41,13 +34,12 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   @override
   Future<List<ProductModel>> getAllProductsByCategoryNum(
       {required int categoryNum}) {
-    // TODO: implement getAllProductsByCategoryNum
     throw UnimplementedError();
   }
 
   @override
   Future<List<ProductModel>> getAllProductsOrderBy({required String name}) {
-    // TODO: implement getAllProductsOrderBy
+  
     throw UnimplementedError();
   }
 }

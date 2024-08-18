@@ -6,8 +6,8 @@ Future<void> initDependencies() async {
   await dotenv.load();
   Stripe.publishableKey = Secrets.stripePublishKey;
 
-
   _initSVG();
+  _auth();
   _product();
   _cart();
 
@@ -16,10 +16,13 @@ Future<void> initDependencies() async {
   Hive.registerAdapter(CartModelAdapter());
 
   final cartBox = await Hive.openBox<CartModel>('cart');
+  final sharedPreferences = await SharedPreferences.getInstance();
+
   final pocketbase = PocketBase(Secrets.pocketbaseUrl);
 
   serviceLocator.registerLazySingleton(() => pocketbase);
   serviceLocator.registerLazySingleton(() => cartBox);
+  serviceLocator.registerLazySingleton(() => sharedPreferences);
 }
 
 void _initSVG() async {
@@ -77,3 +80,28 @@ void _product() {
     );
 }
 
+void _auth() {
+  serviceLocator
+    ..registerFactory<AuthRemoteDatasource>(
+      () => AuthRemoteDatasourceImpl(
+        pocketBase: serviceLocator(),
+        sharedPreferences: serviceLocator(),
+      ),
+    )
+    ..registerFactory<AuthRepository>(
+      () => AuthRepositoryImpl(serviceLocator()),
+    )
+    ..registerFactory(
+      () => SignIn(serviceLocator()),
+    )
+    ..registerFactory(
+      () => SignUp(serviceLocator()),
+    )
+    ..registerLazySingleton(
+      () => AuthBloc(
+        signIn: serviceLocator(),
+        signUp: serviceLocator(),
+        sharedPreferences: serviceLocator()
+      ),
+    );
+}

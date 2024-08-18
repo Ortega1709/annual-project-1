@@ -1,5 +1,5 @@
-import 'package:e_commerce/features/auth/presentation/screens/login_screen.dart';
-import 'package:e_commerce/features/auth/presentation/screens/register_screen.dart';
+import 'package:e_commerce/features/auth/presentation/screens/sign_in_screen.dart';
+import 'package:e_commerce/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:e_commerce/features/cart/presentation/screens/cart_list_screen.dart';
 import 'package:e_commerce/features/product/domain/entities/product.dart';
 import 'package:e_commerce/features/product/presentation/screens/product_details_screen.dart';
@@ -14,7 +14,7 @@ import '../features/index.dart';
 
 class AppRouterConfig {
   late final router = GoRouter(
-    initialLocation: '/login',
+    initialLocation: '/sign-in',
     routes: [
       GoRoute(
         path: '/',
@@ -29,26 +29,26 @@ class AppRouterConfig {
         },
       ),
       GoRoute(
-        path: '/login',
+        path: '/sign-in',
         builder: (context, state) {
           return const AnnotatedRegion(
             value: SystemUiOverlayStyle(
               statusBarColor: AppColor.backgroundColor,
               systemNavigationBarColor: AppColor.backgroundColor,
             ),
-            child: LoginScreen(),
+            child: SignInScreen(),
           );
         },
       ),
       GoRoute(
-        path: '/register',
+        path: '/sign-up',
         builder: (context, state) {
           return const AnnotatedRegion(
             value: SystemUiOverlayStyle(
               statusBarColor: AppColor.backgroundColor,
               systemNavigationBarColor: AppColor.backgroundColor,
             ),
-            child: RegisterScreen(),
+            child: SignUpScreen(),
           );
         },
       ),

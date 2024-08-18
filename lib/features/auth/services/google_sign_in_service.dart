@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleSignInService {
@@ -9,7 +11,7 @@ class GoogleSignInService {
     try {
       return _googleSignIn.signIn();
     } catch (e) {
-      print('Error signing in with Google: $e');
+      log('Error signing in with Google: $e');
       return null;
     }
   }
@@ -18,7 +20,7 @@ class GoogleSignInService {
     try {
       return _googleSignIn.signOut();
     } catch (e) {
-      print('Error signing out of Google: $e');
+      log('Error signing out of Google: $e');
       return null;
     }
   }
