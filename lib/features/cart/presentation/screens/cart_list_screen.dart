@@ -19,16 +19,11 @@ class _CartListScreenState extends State<CartListScreen> {
   @override
   void initState() {
     super.initState();
-  }
-
-  void onGooglePayResult(paymentResult) {
-    debugPrint(paymentResult.toString());
+    context.read<CartBloc>().add(GetAllItemsEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    context.read<CartBloc>().add(GetAllItemsEvent());
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Mon panier"),
@@ -36,7 +31,8 @@ class _CartListScreenState extends State<CartListScreen> {
       body: BlocConsumer<CartBloc, CartState>(
         listener: (context, state) {
           if (state is DeleteToCartSuccessState) {
-            Messages.success("Deleted", state.message, context);
+            Messages.success("Panier", state.message, context);
+            context.read<CartBloc>().add(GetAllItemsEvent());
           }
         },
         builder: (context, state) {

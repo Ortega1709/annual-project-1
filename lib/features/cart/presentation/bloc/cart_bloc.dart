@@ -37,16 +37,21 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     DeleteItemToCartEvent event,
     Emitter<CartState> emit,
   ) async {
+    emit(CartLoadingState());
     final response = await _deleteItemToCart.invoke(
       DeleteItemToCartParams(index: event.index),
     );
-    response.fold((err) => emit(CartErrorState(err.message)), (items) {});
+    response.fold(
+      (err) => emit(CartErrorState(err.message)),
+      (items) => emit(const DeleteToCartSuccessState('Suppression réussie!')),
+    );
   }
 
   Future<void> getAllItems(
     GetAllItemsEvent event,
     Emitter<CartState> emit,
   ) async {
+    emit(CartLoadingState());
     final response = await _getCartItems.invoke(NoParams());
     response.fold(
       (err) => emit(CartErrorState(err.message)),
@@ -58,6 +63,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     AddItemToCartEvent event,
     Emitter<CartState> emit,
   ) async {
+    emit(CartLoadingState());
     final response = await _addItemToCart.invoke(
       AddItemToCartParams(
         id: event.id,
@@ -70,7 +76,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
     response.fold(
       (err) => emit(CartErrorState(err.message)),
-      (items) => emit(const AddToCartSuccessState("Add to cart")),
+      (items) => emit(const AddToCartSuccessState("Ajout réussi !")),
     );
   }
 }

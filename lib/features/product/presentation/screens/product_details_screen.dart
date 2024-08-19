@@ -44,18 +44,21 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         child: BlocConsumer<CartBloc, CartState>(
           listener: (context, state) {
             if (state is AddToCartSuccessState) {
-              Messages.success("Info", state.message, context);
+              Messages.success("Panier", state.message, context);
             }
 
             if (state is CartErrorState) {
-              Messages.error("Error", state.message, context);
+              Messages.error("Panier", "Erreur d'ajout", context);
             }
           },
           builder: (context, state) {
             return MButton(
-              text: "Ajouter au panier | € ${widget.product.price! * quantity}",
+              text:
+                  "Ajouter au panier | € ${(widget.product.price! * quantity).toStringAsFixed(2)}",
               onPressed: () {
-                final isAuthenticated = serviceLocator<SharedPreferences>().getBool('authentication') ?? false;
+                final isAuthenticated = serviceLocator<SharedPreferences>()
+                        .getBool('authentication') ??
+                    false;
                 if (!isAuthenticated) {
                   authRequiredDialog(context);
                   return;

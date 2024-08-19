@@ -12,7 +12,7 @@ class CartRepositoryImpl implements CartRepository {
   CartRepositoryImpl(this.cartLocalDataSource);
 
   @override
-  Future<Either<Failure, void>> addItemToCart(Cart cart) async {
+  Future<Either<Failure, List<Cart>>> addItemToCart(Cart cart) async {
     try {
       return right(
           await cartLocalDataSource.addItemToCart(CartModel.fromEntity(cart)));
@@ -22,7 +22,7 @@ class CartRepositoryImpl implements CartRepository {
   }
 
   @override
-  Future<Either<Failure, void>> deleteItemToCart(int index) async {
+  Future<Either<Failure, List<Cart>>> deleteItemToCart(int index) async {
     try {
       return right(await cartLocalDataSource.deleteItemToCart(index));
     } on ServerException catch (e) {

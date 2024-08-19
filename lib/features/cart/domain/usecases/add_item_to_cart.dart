@@ -4,13 +4,13 @@ import 'package:e_commerce/features/cart/domain/entities/cart.dart';
 import 'package:e_commerce/features/cart/domain/repositories/cart_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-class AddItemToCart implements UseCase<void, AddItemToCartParams> {
+class AddItemToCart implements UseCase<List<Cart>, AddItemToCartParams> {
   final CartRepository cartRepository;
 
   AddItemToCart(this.cartRepository);
 
   @override
-  Future<Either<Failure, void>> invoke(AddItemToCartParams params) {
+  Future<Either<Failure, List<Cart>>> invoke(AddItemToCartParams params) {
     return cartRepository.addItemToCart(
       Cart(
         id: params.id,

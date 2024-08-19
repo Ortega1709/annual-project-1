@@ -59,17 +59,7 @@ class CartItem extends StatelessWidget {
                     .bodySmall
                     ?.copyWith(color: AppColor.greyColor),
               ),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  QuantityCounter(
-                    quantity: cart.quantity,
-                    onAdd: () {},
-                    onRemove: () {},
-                  ),
-                ],
-              ),
-            )
+              trailing: Text(cart.quantity.toString()))
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

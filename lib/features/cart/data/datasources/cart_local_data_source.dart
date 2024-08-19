@@ -6,8 +6,8 @@ import 'package:hive/hive.dart';
 
 abstract interface class CartLocalDataSource {
   Future<List<CartModel>> getAllItems();
-  Future<void> addItemToCart(CartModel cartModel);
-  Future<void> deleteItemToCart(int index);
+  Future<List<CartModel>> addItemToCart(CartModel cartModel);
+  Future<List<CartModel>> deleteItemToCart(int index);
 }
 
 class CartLocalDataSourceImpl implements CartLocalDataSource {
@@ -15,21 +15,23 @@ class CartLocalDataSourceImpl implements CartLocalDataSource {
   CartLocalDataSourceImpl(this.cartBox);
 
   @override
-  Future<void> addItemToCart(CartModel cartModel) async {
+  Future<List<CartModel>> addItemToCart(CartModel cartModel) async {
     try {
       if (await _getItemByName(cartModel.name)) {
         throw const ServerException('Item already in cart');
       }
       await cartBox.add(cartModel);
+      return getAllItems();
     } catch (e) {
       throw ServerException(e.toString());
     }
   }
 
   @override
-  Future<void> deleteItemToCart(int index) async {
+  Future<List<CartModel>> deleteItemToCart(int index) async {
     try {
       await cartBox.deleteAt(index);
+      return getAllItems();
     } catch (e) {
       throw ServerException(e.toString());
     }
