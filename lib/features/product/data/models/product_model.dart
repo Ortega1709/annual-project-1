@@ -15,15 +15,15 @@ class ProductModel extends Product {
 
   factory ProductModel.fromJson(RecordModel map) {
     return ProductModel(
-        id: map.data["produitid"],
-        name: map.expand["produitid"]?.first.data["name"] ?? "",
-        seuilRupture: map.expand["produitid"]?.first.data["seuilrupture"] ?? 0,
-        description: map.expand["produitid"]?.first.data["description"] ?? "",
+        id: map.id,
+        name: map.data["name"],
+        seuilRupture: map.data["seuilrupture"] ?? 0,
+        description: map.data["description"] ?? "",
         category: CategoryModel.fromJson(
-          map.expand["produitid"]?.first.expand["categorynum"]?.first ??
+          map.expand["categorynum"]?.first ??
               RecordModel.fromJson({"id": "", "name": ""}),
         ),
-        price: map.data["prix"],
-        image: map.expand["produitid"]?.first.data["image"] ?? "");
+        price: map.data["price"],
+        image: map.data["image"] ?? "");
   }
 }

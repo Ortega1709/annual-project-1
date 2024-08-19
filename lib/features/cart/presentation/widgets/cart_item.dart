@@ -80,7 +80,6 @@ class CartItem extends StatelessWidget {
                       overflow: TextOverflow.ellipsis, maxLines: 2),
                   trailing: Text(cart.price.toString()),
                 ),
-                // MButton(text: "Ajouter", onPressed: () {})
               ],
             ),
     );

@@ -1,6 +1,7 @@
 import 'package:e_commerce/core/shared/widgets/m_button.dart';
 import 'package:e_commerce/core/shared/widgets/progress.dart';
 import 'package:e_commerce/core/theme/app_dimen.dart';
+import 'package:e_commerce/core/utils/calculate_total_cart.dart';
 import 'package:e_commerce/core/utils/messages.dart';
 import 'package:e_commerce/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:e_commerce/features/cart/presentation/widgets/cart_list.dart';
@@ -49,14 +50,25 @@ class _CartListScreenState extends State<CartListScreen> {
           return const SizedBox.shrink();
         },
       ),
-      bottomNavigationBar: Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppDimen.p16),
-          child: MButton(
-            onPressed: () async {
-              await StripeService.instance.makePayment(context);
-            },
-            text: 'Commander',
-          )),
+      bottomNavigationBar: BlocBuilder<CartBloc, CartState>(
+        builder: (context, state) {
+          if (state is CartLoadedState) {
+            return state.cart.isNotEmpty
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(vertical: AppDimen.p16),
+                    child: MButton(
+                      onPressed: () async {
+                        final amount = await calculateTotalCart(state.cart);
+                        await StripeService.instance.makePayment(context, amount);
+                      },
+                      text: 'Commander',
+                    ),
+                  )
+                : const SizedBox.shrink();
+          }
+          return const SizedBox.shrink();
+        },
+      ),
     );
   }
 }

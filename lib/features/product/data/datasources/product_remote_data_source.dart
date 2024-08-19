@@ -21,9 +21,10 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   Future<List<ProductModel>> getAllProducts() async {
     try {
       final response = await pocketBase
-          .collection('histovaleur')
-          .getList(page: 1, perPage: 20, expand: "produitid.categorynum");
+          .collection('descproduit')
+          .getList(page: 1, perPage: 20, expand: "categorynum");
 
+      print(response);
       return response.items.map((e) => ProductModel.fromJson(e)).toList();
     } catch (e) {
       log(e.toString());

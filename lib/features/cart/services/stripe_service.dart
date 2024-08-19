@@ -11,9 +11,9 @@ class StripeService {
 
   static final StripeService instance = StripeService._();
 
-  Future<void> makePayment(BuildContext context) async {
+  Future<void> makePayment(BuildContext context, double amount) async {
     try {
-      paymentIntent = await createPaymentIntent(10, 'USD');
+      paymentIntent = await createPaymentIntent(amount, 'USD');
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
           paymentIntentClientSecret: paymentIntent!['client_secret'],
@@ -49,7 +49,7 @@ class StripeService {
     }
   }
 
-  createPaymentIntent(int amount, String currency) async {
+  createPaymentIntent(double amount, String currency) async {
     try {
       Map<String, dynamic> body = {
         'amount': _calculateAmount(amount),
@@ -72,8 +72,8 @@ class StripeService {
     }
   }
 
-  String _calculateAmount(int amount) {
+  String _calculateAmount(double amount) {
     final calculatedAmount = amount * 100;
-    return calculatedAmount.toString();
+    return calculatedAmount.toInt().toString();
   }
 }
