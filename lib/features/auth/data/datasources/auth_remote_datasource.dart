@@ -64,10 +64,11 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
           sharedPreferences.setString('email', googleUserEmail);
           sharedPreferences.setString('name', googleUserName!);
           sharedPreferences.setString('profil', googleUserProfil!);
-          
+
           return UserModel.fromJson(pocketUserList.items.first.data).copyWith(
-              id: pocketUserList.items.first.id,
-              created: pocketUserList.items.first.created);
+            id: pocketUserList.items.first.id,
+            created: pocketUserList.items.first.created,
+          );
         }
       }
     } catch (e) {
