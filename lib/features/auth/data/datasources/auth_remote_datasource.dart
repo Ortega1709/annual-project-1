@@ -59,6 +59,12 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
           // type to authenticated and store his id
           sharedPreferences.setBool('authentication', true);
           sharedPreferences.setString('id', pocketUserList.items.first.id);
+
+          // register user email and name in shared preferences
+          sharedPreferences.setString('email', googleUserEmail);
+          sharedPreferences.setString('name', googleUserName!);
+          sharedPreferences.setString('profil', googleUserProfil!);
+          
           return UserModel.fromJson(pocketUserList.items.first.data).copyWith(
               id: pocketUserList.items.first.id,
               created: pocketUserList.items.first.created);

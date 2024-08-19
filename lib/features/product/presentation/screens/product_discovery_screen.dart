@@ -1,9 +1,12 @@
+import 'package:e_commerce/core/shared/widgets/auth_required_dialog.dart';
 import 'package:e_commerce/core/theme/app_color.dart';
 import 'package:e_commerce/core/theme/app_dimen.dart';
 import 'package:e_commerce/features/product/presentation/widgets/product_promo.dart';
+import 'package:e_commerce/init_dependencies.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductDiscoveryScreen extends StatefulWidget {
   const ProductDiscoveryScreen({super.key});
@@ -13,7 +16,6 @@ class ProductDiscoveryScreen extends StatefulWidget {
 }
 
 class _ProductDiscoveryScreenState extends State<ProductDiscoveryScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -34,6 +36,13 @@ class _ProductDiscoveryScreenState extends State<ProductDiscoveryScreen> {
           IconButton(
             tooltip: "Panier",
             onPressed: () {
+              final isAuthenticated = serviceLocator<SharedPreferences>()
+                      .getBool('authentication') ??
+                  false;
+              if (!isAuthenticated) {
+                authRequiredDialog(context);
+                return;
+              }
               context.push("/cart");
             },
             icon: const Icon(
