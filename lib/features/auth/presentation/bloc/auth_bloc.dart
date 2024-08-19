@@ -2,6 +2,7 @@ import 'package:e_commerce/core/shared/entities/user.dart';
 import 'package:e_commerce/core/utils/usecase.dart';
 import 'package:e_commerce/features/auth/domain/usecases/sign_in.dart';
 import 'package:e_commerce/features/auth/domain/usecases/sign_up.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,6 +28,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
     on<SignInWithGoogleEvent>(signInWithGoogle);
     on<SignUpWithGoogleEvent>(signUpWithGoogle);
+    on<UserSessionCheckEvent>(userSessionCheck);
   }
 
   Future<void> signInWithGoogle(
@@ -75,6 +77,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           ),
         ),
       );
+    }
+  }
+
+  Future<void> userSessionCheck(
+    UserSessionCheckEvent event,
+    Emitter<AuthState> emit,
+  ) async {
+    debugPrint('UserSessionCheckEvent received');
+    bool isAuthenticated = _sharedPreferences.getBool('authentication') ?? false;
+
+    if (isAuthenticated) {
+      emit(UserSessionAuthenticatedState());
+    } else {
+      emit(UserSessionUnAuthenticatedState());
     }
   }
 }

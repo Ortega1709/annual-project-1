@@ -16,6 +16,9 @@ final class LoadingAuthState extends AuthState {
   List<Object> get props => [];
 }
 
+final class UserSessionAuthenticatedState extends AuthState {}
+final class UserSessionUnAuthenticatedState extends AuthInitial {}
+
 final class SignInWithGoogleErrorState extends AuthState {
   final String error;
   const SignInWithGoogleErrorState(this.error);
@@ -49,3 +52,4 @@ final class SignUpWithGoogleErrorState extends AuthState {
   @override
   List<Object> get props => [error];
 }
+

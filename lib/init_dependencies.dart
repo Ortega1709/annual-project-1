@@ -1,6 +1,4 @@
 
-import 'package:e_commerce/core/shared/cubits/user_session_cubit.dart';
-import 'package:e_commerce/core/utils/user_session_manager.dart';
 import 'package:e_commerce/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:e_commerce/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:e_commerce/features/auth/domain/repositories/auth_repository.dart';

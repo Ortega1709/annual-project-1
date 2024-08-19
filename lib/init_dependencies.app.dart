@@ -19,14 +19,9 @@ Future<void> initDependencies() async {
   final sharedPreferences = await SharedPreferences.getInstance();
   final pocketbase = PocketBase(Secrets.pocketbaseUrl);
 
-  final userSessionManager = UserSessionManager(sharedPreferences);
-  final userSessionCubit = UserSessionCubit(userSessionManager);
-
   serviceLocator.registerLazySingleton(() => pocketbase);
   serviceLocator.registerLazySingleton(() => cartBox);
   serviceLocator.registerLazySingleton(() => sharedPreferences);
-  serviceLocator.registerLazySingleton(() => userSessionManager);
-  serviceLocator.registerLazySingleton(() => userSessionCubit);
 }
 
 void _initSVG() async {
@@ -103,9 +98,8 @@ void _auth() {
     )
     ..registerLazySingleton(
       () => AuthBloc(
-        signIn: serviceLocator(),
-        signUp: serviceLocator(),
-        sharedPreferences: serviceLocator()
-      ),
+          signIn: serviceLocator(),
+          signUp: serviceLocator(),
+          sharedPreferences: serviceLocator()),
     );
 }

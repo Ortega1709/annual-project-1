@@ -24,14 +24,20 @@ class _SignInScreenState extends State<SignInScreen> {
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is SignInWithGoogleErrorState) {
-            Messages.error("Authentification", "Erreur d'authentification", context);
-          } 
+            Messages.error(
+                "Authentification", "Erreur d'authentification", context);
+          }
 
           if (state is SignInWithGoogleSuccessState) {
-            Messages.success("Authentification", "Authentification réussie", context);
+            Messages.success(
+                "Authentification", "Authentification réussie", context);
 
             // if user is null it means user has not registered yet, go to registration screen
-            if (state.user == null) { context.push('/sign-up'); }
+            if (state.user != null) {
+              context.go('/');
+            } else {
+              context.push('/sign-up');
+            }
           }
         },
         builder: (context, state) {
@@ -91,7 +97,7 @@ class _SignInScreenState extends State<SignInScreen> {
             const SizedBox(height: AppDimen.p8),
             MOutlinedButton(
               text: 'Continuer sans compte',
-              onPressed: () {},
+              onPressed: () => context.go('/'),
             ),
           ],
         ),

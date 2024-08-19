@@ -1,4 +1,3 @@
-import 'package:e_commerce/core/shared/cubits/user_session_cubit.dart';
 import 'package:e_commerce/core/theme/app_theme.dart';
 import 'package:e_commerce/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:e_commerce/features/cart/presentation/bloc/cart_bloc.dart';
@@ -18,14 +17,19 @@ class ECommerceApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => serviceLocator<ProductBloc>()),
         BlocProvider(create: (_) => serviceLocator<CartBloc>()),
-        BlocProvider(create: (_) => serviceLocator<AuthBloc>()),
-        BlocProvider(create: (_) => serviceLocator<UserSessionCubit>()),
+        BlocProvider(create: (_) => serviceLocator<AuthBloc>()..add(const UserSessionCheckEvent())),
       ],
-      child: MaterialApp.router(
-        title: 'e-commerce',
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.lightTheme,
-        routerConfig: AppRouterConfig(UserSessionCubit(serviceLocator())).router,
+      child: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          // debugPrint('refreshing router');
+          // AppRouterConfig(serviceLocator()).router.refresh();
+        },
+        child: MaterialApp.router(
+          title: 'e-commerce',
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.lightTheme,
+          routerConfig: AppRouterConfig(serviceLocator()).router,
+        ),
       ),
     );
   }
