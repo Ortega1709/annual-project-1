@@ -9,40 +9,40 @@ final class CartInitial extends CartState {
   List<Object> get props => [];
 }
 
-final class CartLoading extends CartState {
+final class CartLoadingState extends CartState {
   @override
   List<Object?> get props => [];
 }
 
-final class CartLoaded extends CartState {
+final class CartLoadedState extends CartState {
   final List<Cart> cart;
-  const CartLoaded(this.cart);
+  const CartLoadedState(this.cart);
 
   @override
   List<Object?> get props => [cart];
 
 }
 
-final class CartError extends CartState {
+final class CartErrorState extends CartState {
   final String message;
-  const CartError(this.message);
+  const CartErrorState(this.message);
 
   @override
   List<Object?> get props => [message];
 }
 
-final class AddToCartSuccess extends CartState {
+final class AddToCartSuccessState extends CartState {
   final String message;
-  const AddToCartSuccess(this.message);
+  const AddToCartSuccessState(this.message);
 
   @override
   List<Object?> get props => [message];
 
 }
 
-final class DeleteToCartSuccess extends CartState {
+final class DeleteToCartSuccessState extends CartState {
   final String message;
-  const DeleteToCartSuccess(this.message);
+  const DeleteToCartSuccessState(this.message);
 
   @override
   List<Object?> get props => [message];

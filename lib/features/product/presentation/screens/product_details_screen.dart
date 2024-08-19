@@ -1,13 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_commerce/core/shared/widgets/auth_required_dialog.dart';
 import 'package:e_commerce/core/shared/widgets/m_button.dart';
 import 'package:e_commerce/core/shared/widgets/quantity_counter.dart';
 import 'package:e_commerce/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:e_commerce/features/product/domain/entities/product.dart';
+import 'package:e_commerce/init_dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/shared/widgets/progress.dart';
 import '../../../../core/theme/app_color.dart';
@@ -37,14 +40,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(AppDimen.p16),
+        padding: const EdgeInsets.symmetric(vertical: AppDimen.p16),
         child: BlocConsumer<CartBloc, CartState>(
           listener: (context, state) {
-            if (state is AddToCartSuccess) {
+            if (state is AddToCartSuccessState) {
               Messages.success("Info", state.message, context);
             }
 
-            if (state is CartError) {
+            if (state is CartErrorState) {
               Messages.error("Error", state.message, context);
             }
           },
@@ -52,6 +55,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             return MButton(
               text: "Ajouter au panier | € ${widget.product.price! * quantity}",
               onPressed: () {
+                final isAuthenticated = serviceLocator<SharedPreferences>().getBool('authentication') ?? false;
+                if (!isAuthenticated) {
+                  authRequiredDialog(context);
+                  return;
+                }
                 context.read<CartBloc>().add(
                       AddItemToCartEvent(
                         widget.product.id,

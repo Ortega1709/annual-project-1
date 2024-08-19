@@ -13,18 +13,24 @@ part 'product_state.dart';
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final GetProducts _getProducts;
 
-  ProductBloc({required GetProducts getProducts}): _getProducts = getProducts, super(ProductInitial()) {
-
+  ProductBloc({required GetProducts getProducts})
+      : _getProducts = getProducts,
+        super(ProductInitial()) {
     on<ProductEvent>((event, emit) {
-      log("Product event");
+      emit(ProductInitial());
     });
+    on<GetAllProductsEvent>(getAllProducts);
+  }
 
-    on<GetAllProductsEvent>((event, emit) async {
-      final response = await _getProducts.invoke(NoParams());
-      response.fold(
-        (err) => emit(ProductError(err.message)),
-        (products) => emit(ProductLoaded(products)),
-      );
-    });
+  Future<void> getAllProducts(
+    ProductEvent event,
+    Emitter<ProductState> emit,
+  ) async {
+    emit(ProductLoadingState());
+    final response = await _getProducts.invoke(NoParams());
+    response.fold(
+      (err) => emit(ProductErrorState(err.message)),
+      (products) => emit(ProductLoadedState(products)),
+    );
   }
 }

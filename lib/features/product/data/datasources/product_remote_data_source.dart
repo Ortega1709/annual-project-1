@@ -39,7 +39,6 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
 
   @override
   Future<List<ProductModel>> getAllProductsOrderBy({required String name}) {
-  
     throw UnimplementedError();
   }
 }

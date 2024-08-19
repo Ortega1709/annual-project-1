@@ -1,5 +1,5 @@
-
 import 'package:e_commerce/core/shared/widgets/m_button.dart';
+import 'package:e_commerce/core/shared/widgets/progress.dart';
 import 'package:e_commerce/core/theme/app_dimen.dart';
 import 'package:e_commerce/core/utils/messages.dart';
 import 'package:e_commerce/features/cart/presentation/bloc/cart_bloc.dart';
@@ -35,14 +35,14 @@ class _CartListScreenState extends State<CartListScreen> {
       ),
       body: BlocConsumer<CartBloc, CartState>(
         listener: (context, state) {
-          if (state is DeleteToCartSuccess) {
+          if (state is DeleteToCartSuccessState) {
             Messages.success("Deleted", state.message, context);
           }
         },
         builder: (context, state) {
-          if (state is CartLoading) {
-            return const CircularProgressIndicator();
-          } else if (state is CartLoaded) {
+          if (state is CartLoadingState) {
+            return const Center(child: Progress());
+          } else if (state is CartLoadedState) {
             return CartList(
               cart: state.cart,
               onDismissed: (index) {
@@ -54,7 +54,7 @@ class _CartListScreenState extends State<CartListScreen> {
         },
       ),
       bottomNavigationBar: Padding(
-          padding: const EdgeInsets.all(AppDimen.p16),
+          padding: const EdgeInsets.symmetric(vertical: AppDimen.p16),
           child: MButton(
             onPressed: () async {
               await StripeService.instance.makePayment(context);

@@ -1,3 +1,4 @@
+import 'package:e_commerce/core/theme/app_color.dart';
 import 'package:e_commerce/core/theme/app_dimen.dart';
 import 'package:e_commerce/features/product/presentation/widgets/product_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,8 +13,15 @@ class ProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: const EdgeInsets.all(AppDimen.p16),
+    return ListView.separated(
+      separatorBuilder: (context, index) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: AppDimen.p16),
+        child: Container(
+          height: .5,
+          color: AppColor.greyColor.withOpacity(.5),
+        ),
+      ),
+      padding: const EdgeInsets.symmetric(vertical: AppDimen.p16),
       itemCount: products.length,
       itemBuilder: (context, index) {
         final product = products[index];

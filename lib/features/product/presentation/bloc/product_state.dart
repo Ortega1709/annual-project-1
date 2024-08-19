@@ -9,22 +9,22 @@ final class ProductInitial extends ProductState {
   List<Object> get props => [];
 }
 
-final class ProductLoading extends ProductState {
+final class ProductLoadingState extends ProductState {
   @override
   List<Object?> get props => [];
 }
 
-final class ProductLoaded extends ProductState {
+final class ProductLoadedState extends ProductState {
   final List<Product> products;
-  const ProductLoaded(this.products);
+  const ProductLoadedState(this.products);
 
   @override
   List<Object?> get props => [products];
 }
 
-final class ProductError extends ProductState {
+final class ProductErrorState extends ProductState {
   final String message;
-  const ProductError(this.message);
+  const ProductErrorState(this.message);
 
   @override
   List<Object?> get props => [message];

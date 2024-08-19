@@ -1,3 +1,4 @@
+import 'package:e_commerce/core/shared/widgets/progress.dart';
 import 'package:e_commerce/core/theme/app_dimen.dart';
 import 'package:e_commerce/core/utils/messages.dart';
 import 'package:e_commerce/features/product/presentation/widgets/product_filter_dialog.dart';
@@ -16,7 +17,8 @@ class ProductDiscoveryListScreen extends StatefulWidget {
       _ProductDiscoveryListScreenState();
 }
 
-class _ProductDiscoveryListScreenState extends State<ProductDiscoveryListScreen> {
+class _ProductDiscoveryListScreenState
+    extends State<ProductDiscoveryListScreen> {
   int selectedSort = 0;
 
   @override
@@ -27,7 +29,6 @@ class _ProductDiscoveryListScreenState extends State<ProductDiscoveryListScreen>
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Découvrir nos produits"),
@@ -89,14 +90,14 @@ class _ProductDiscoveryListScreenState extends State<ProductDiscoveryListScreen>
         },
         child: BlocConsumer<ProductBloc, ProductState>(
           listener: (context, state) {
-            if (state is ProductError) {
+            if (state is ProductErrorState) {
               Messages.error("Error", state.message, context);
             }
           },
           builder: (context, state) {
-            if (state is ProductLoading) {
-              return const CircularProgressIndicator();
-            } else if (state is ProductLoaded) {
+            if (state is ProductLoadingState) {
+              return const Center(child: Progress(size: 60));
+            } else if (state is ProductLoadedState) {
               return ProductList(products: state.products);
             }
             return const SizedBox.shrink();
