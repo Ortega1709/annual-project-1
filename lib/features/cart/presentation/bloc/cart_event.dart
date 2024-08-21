@@ -14,15 +14,17 @@ final class AddItemToCartEvent extends CartEvent {
   final String name;
   final String? image;
   final double? price;
+  final String productId;
   final int quantity;
 
-  const AddItemToCartEvent(
-    this.id,
-    this.name,
-    this.image,
-    this.price,
-    this.quantity,
-  );
+  const AddItemToCartEvent({
+    required this.id,
+    required this.name,
+    required this.quantity,
+    required this.price,
+    required this.image,
+    required this.productId,
+  });
 
   @override
   List<Object?> get props => [id, name, image, price, quantity];
@@ -34,4 +36,19 @@ final class DeleteItemToCartEvent extends CartEvent {
 
   @override
   List<Object?> get props => [index];
+}
+
+class CartPaymentSuccessEvent extends CartEvent {
+  final double amount;
+  final String references;
+  final List<Cart> carts;
+
+  const CartPaymentSuccessEvent({
+    required this.amount,
+    required this.references,
+    required this.carts,
+  });
+
+  @override
+  List<Object?> get props => [amount, carts];
 }

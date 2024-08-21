@@ -55,5 +55,4 @@ class CartLocalDataSourceImpl implements CartLocalDataSource {
       throw ServerException(e.toString());
     }
   }
-
 }

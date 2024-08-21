@@ -31,6 +31,13 @@ final class CartErrorState extends CartState {
   List<Object?> get props => [message];
 }
 
+final class CartPaymentErrorState extends CartState {
+  const CartPaymentErrorState();
+
+  @override
+  List<Object?> get props => [];
+}
+
 final class AddToCartSuccessState extends CartState {
   final String message;
   const AddToCartSuccessState(this.message);
@@ -49,3 +56,9 @@ final class DeleteToCartSuccessState extends CartState {
 
 }
 
+final class CartPayementSuccessState extends CartState {
+  const CartPayementSuccessState();
+
+  @override
+  List<Object?> get props => [];
+}

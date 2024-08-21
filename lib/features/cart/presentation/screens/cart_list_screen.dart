@@ -35,6 +35,11 @@ class _CartListScreenState extends State<CartListScreen> {
             Messages.success("Panier", state.message, context);
             context.read<CartBloc>().add(GetAllItemsEvent());
           }
+
+          if (state is CartPayementSuccessState) {
+            Messages.success("Paiement", 'Paiement réussi !', context);
+            context.read<CartBloc>().add(GetAllItemsEvent());
+          }
         },
         builder: (context, state) {
           if (state is CartLoadingState) {
@@ -59,7 +64,18 @@ class _CartListScreenState extends State<CartListScreen> {
                     child: MButton(
                       onPressed: () async {
                         final amount = await calculateTotalCart(state.cart);
-                        await StripeService.instance.makePayment(context, amount);
+                        final response = await StripeService.instance
+                            .makePayment(context, amount);
+
+                        if (response != '') {
+                          context.read<CartBloc>().add(
+                                CartPaymentSuccessEvent(
+                                  carts: state.cart,
+                                  amount: amount,
+                                  references: response,
+                                ),
+                              );
+                        }
                       },
                       text: 'Commander',
                     ),

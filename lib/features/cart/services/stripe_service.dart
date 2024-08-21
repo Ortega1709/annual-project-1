@@ -11,9 +11,13 @@ class StripeService {
 
   static final StripeService instance = StripeService._();
 
-  Future<void> makePayment(BuildContext context, double amount) async {
+  Future<String> makePayment(BuildContext context, double amount) async {
     try {
       paymentIntent = await createPaymentIntent(amount, 'USD');
+
+      // get payment ID from the server
+      final paymentIntentId = paymentIntent!['id'];
+
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
           paymentIntentClientSecret: paymentIntent!['client_secret'],
@@ -26,19 +30,25 @@ class StripeService {
         ),
       );
 
-      displayPaymentSheet(context);
+      // ignore: use_build_context_synchronously
+      await displayPaymentSheet(context: context);
+      final response =
+          await checkSuccessPayment(paymentIntentId: paymentIntentId);
+      if (response) {
+        return paymentIntentId.toString();
+      }
     } catch (e) {
-      print("exception $e");
-
+      debugPrint("exception $e");
       if (e is StripeConfigException) {
-        print("Stripe exception ${e.message}");
+        debugPrint("Stripe exception ${e.message}");
       } else {
-        print("exception $e");
+        debugPrint("exception $e");
       }
     }
+    return '';
   }
 
-  displayPaymentSheet(BuildContext context) async {
+  displayPaymentSheet({required BuildContext context}) async {
     try {
       await Stripe.instance.presentPaymentSheet();
       paymentIntent = null;
@@ -65,11 +75,35 @@ class StripeService {
         },
         body: body,
       );
-      print('Payment Intent Body: ${response.body.toString()}');
+      debugPrint('Payment Intent Body: ${response.body.toString()}');
       return jsonDecode(response.body.toString());
     } catch (err) {
-      print('Error charging user: ${err.toString()}');
+      debugPrint('Error charging user: ${err.toString()}');
     }
+  }
+
+  Future<bool> checkSuccessPayment({
+    required String paymentIntentId,
+  }) async {
+    var secretKey = Secrets.stripeSecretKey;
+    try {
+      http.Response response = await http.get(
+          Uri.parse(
+            'https://api.stripe.com/v1/payment_intents/$paymentIntentId',
+          ),
+          headers: {
+            "Authorization": "Bearer $secretKey",
+            "Content-Type": "application/x-www-form-urlencoded"
+          });
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return (data['status'] == 'succeeded') ? true : false;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+    return false;
   }
 
   String _calculateAmount(double amount) {

@@ -25,11 +25,16 @@ class CartModel implements Cart {
   @override
   final int quantity;
 
+  @HiveField(5)
+  @override
+  final String productId;
+
   CartModel({
     required this.id,
     required this.name,
     required this.image,
     required this.price,
+    required this.productId,
     required this.quantity,
   });
 
@@ -37,6 +42,7 @@ class CartModel implements Cart {
     return CartModel(
       id: cart.id,
       name: cart.name,
+      productId: cart.productId,
       image: cart.image,
       price: cart.price,
       quantity: cart.quantity,
@@ -46,6 +52,7 @@ class CartModel implements Cart {
   Cart toEntity() {
     return Cart(
       id: id,
+      productId: productId,
       name: name,
       image: image,
       price: price,

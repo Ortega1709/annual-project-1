@@ -37,8 +37,14 @@ void _cart() {
     ..registerFactory<CartLocalDataSource>(
       () => CartLocalDataSourceImpl(serviceLocator()),
     )
+    ..registerFactory<CommandeRemoteDataSource>(
+      () => CommandeRemoteDataSourceImpl(serviceLocator()),
+    )
     ..registerFactory<CartRepository>(
       () => CartRepositoryImpl(serviceLocator()),
+    )
+    ..registerFactory<CommandeRepository>(
+      () => CommandeRepositoryImpl(serviceLocator()),
     )
     ..registerFactory(
       () => GetCartItems(serviceLocator()),
@@ -49,11 +55,16 @@ void _cart() {
     ..registerFactory(
       () => DeleteItemToCart(serviceLocator()),
     )
+    ..registerFactory(
+      () => AddOrder(serviceLocator()),
+    )
     ..registerLazySingleton(
       () => CartBloc(
         getCartItems: serviceLocator(),
         addItemToCart: serviceLocator(),
         deleteItemToCart: serviceLocator(),
+        addOrder: serviceLocator(),
+        sharedPreferences: serviceLocator(),
       ),
     );
 }

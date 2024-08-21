@@ -15,6 +15,7 @@ class AddItemToCart implements UseCase<List<Cart>, AddItemToCartParams> {
       Cart(
         id: params.id,
         name: params.name,
+        productId: params.productId,
         image: params.image,
         price: params.price,
         quantity: params.quantity,
@@ -28,10 +29,12 @@ class AddItemToCartParams {
   final String name;
   final String? image;
   final double? price;
+  final String productId;
   final int quantity;
 
   AddItemToCartParams({
     required this.id,
+    required this.productId,
     required this.name,
     required this.image,
     required this.price,

@@ -65,11 +65,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 }
                 context.read<CartBloc>().add(
                       AddItemToCartEvent(
-                        widget.product.id,
-                        widget.product.name,
-                        widget.product.image,
-                        widget.product.price,
-                        quantity,
+                        id: widget.product.id,
+                        name: widget.product.name,
+                        productId: widget.product.id,
+                        image: widget.product.image,
+                        price: widget.product.price,
+                        quantity: quantity,
                       ),
                     );
               },
