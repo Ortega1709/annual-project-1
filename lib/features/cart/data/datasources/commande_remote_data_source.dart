@@ -1,5 +1,7 @@
+
 import 'package:e_commerce/core/errors/exception.dart';
 import 'package:e_commerce/features/cart/data/models/make_order_model.dart';
+import 'package:e_commerce/features/cart/data/models/order_model.dart';
 import 'package:e_commerce/features/cart/domain/entities/cart.dart';
 import 'package:pocketbase/pocketbase.dart';
 
@@ -9,6 +11,7 @@ abstract class CommandeRemoteDataSource {
     required String commandeid,
     required String reference,
   });
+  Future<List<OrderModel>> getAllOrderByUserId({required String userId});
 }
 
 class CommandeRemoteDataSourceImpl implements CommandeRemoteDataSource {
@@ -106,5 +109,17 @@ class CommandeRemoteDataSourceImpl implements CommandeRemoteDataSource {
           .update(product.id, body: {"seuilrupture": newQuantity});
     }
     return true;
+  }
+  
+  @override
+  Future<List<OrderModel>> getAllOrderByUserId({required String userId}) async {
+    try {
+      final orders = await pocketBase.collection('commande').getList(
+        filter: 'userid="$userId"'
+      );
+      return orders.items.map((e) => OrderModel.fromJson(e)).toList();
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
   }
 }

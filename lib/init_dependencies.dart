@@ -17,6 +17,7 @@ import 'package:e_commerce/features/cart/domain/usecases/add_order.dart';
 import 'package:e_commerce/features/cart/domain/usecases/confirm_order.dart';
 import 'package:e_commerce/features/cart/domain/usecases/delete_item_to_cart.dart';
 import 'package:e_commerce/features/cart/domain/usecases/get_cart_items.dart';
+import 'package:e_commerce/features/cart/domain/usecases/get_order_by_user_id.dart';
 import 'package:e_commerce/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:e_commerce/features/product/data/datasources/product_remote_data_source.dart';
 import 'package:e_commerce/features/product/data/repositories/product_repository_impl.dart';

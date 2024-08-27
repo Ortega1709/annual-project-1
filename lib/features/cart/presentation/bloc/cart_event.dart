@@ -62,3 +62,11 @@ final class CartConfirmOrderEvent extends CartEvent {
   @override
   List<Object?> get props => [commandeid, reference];
 }
+
+final class GetOrderByUserIdEvent extends CartEvent {
+  final String userId;
+  const GetOrderByUserIdEvent({required this.userId});
+
+  @override
+  List<Object?> get props => [userId];
+}

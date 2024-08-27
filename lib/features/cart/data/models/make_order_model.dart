@@ -14,6 +14,8 @@ class MakeOrderModel extends MakeOrder {
       "userid": userId,
       "total": total,
       "isdelivered": false,
+      "ispaid": false,
+      "items": cart.length
     };
   }
 }

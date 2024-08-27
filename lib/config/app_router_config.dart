@@ -110,7 +110,7 @@ class AppRouterConfig {
               sharedPreferences.getBool('authentication') ?? false;
           debugPrint('Redirecting to: $isAuthenticated');
 
-          // if user is authenticated but try to access sign-in or sign-up screen, 
+          // if user is authenticated but try to access sign-in or sign-up screen,
           // redirect to home page
           if (isAuthenticated &&
               (state.matchedLocation == '/sign-in' ||

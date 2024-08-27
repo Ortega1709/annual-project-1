@@ -61,9 +61,13 @@ void _cart() {
     ..registerFactory(
       () => AddOrder(serviceLocator()),
     )
+    ..registerFactory(
+      () => GetOrderByUserId(serviceLocator()),
+    )
     ..registerLazySingleton(
       () => CartBloc(
         getCartItems: serviceLocator(),
+        getOrderByUserId: serviceLocator(),
         confirmOrder: serviceLocator(),
         addItemToCart: serviceLocator(),
         deleteItemToCart: serviceLocator(),

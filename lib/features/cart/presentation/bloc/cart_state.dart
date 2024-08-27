@@ -23,6 +23,27 @@ final class CartLoadedState extends CartState {
 
 }
 
+final class OrderLoadingState extends CartState {
+  @override
+  List<Object?> get props => [];
+}
+
+final class OrderLoadedState extends CartState {
+  final List<Orderl> orders;
+  const OrderLoadedState(this.orders);
+
+  @override
+  List<Object?> get props => [orders];
+}
+
+final class OrderErrorState extends CartState {
+  final String errorMessage;
+  const OrderErrorState(this.errorMessage);
+
+  @override
+  List<Object?> get props => [errorMessage];
+}
+
 final class CartErrorState extends CartState {
   final String message;
   const CartErrorState(this.message);

@@ -1,4 +1,5 @@
 import 'package:e_commerce/features/account/presentation/screens/account_screen.dart';
+import 'package:e_commerce/features/cart/presentation/screens/order_list_screen.dart';
 import 'package:e_commerce/features/product/presentation/screens/product_discovery_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,8 @@ class _IndexState extends State<Index> {
   Widget build(BuildContext context) {
     const List<Widget> screens = [
       ProductDiscoveryScreen(),
+      Column(),
+      OrderListScreen(),
       AccountScreen()
     ];
 
@@ -35,7 +38,7 @@ class _IndexState extends State<Index> {
         unselectedFontSize: 12,
         currentIndex: currentIndex,
         onTap: (value) {
-          if (value == 10) {
+          if (value == 1) {
             context.push("/search");
           } else {
             setState(() {
@@ -50,6 +53,20 @@ class _IndexState extends State<Index> {
               size: 20,
             ),
             label: "Aliments",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              FontAwesomeIcons.magnifyingGlass,
+              size: 20,
+            ),
+            label: "Recherche",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              FontAwesomeIcons.cartArrowDown,
+              size: 20,
+            ),
+            label: "Commandes",
           ),
           BottomNavigationBarItem(
             icon: Icon(

@@ -22,9 +22,8 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
     try {
       final response = await pocketBase
           .collection('descproduit')
-          .getList(page: 1, perPage: 20, expand: "categorynum");
+          .getList(expand: "categorynum");
 
-      print(response);
       return response.items.map((e) => ProductModel.fromJson(e)).toList();
     } catch (e) {
       log(e.toString());
