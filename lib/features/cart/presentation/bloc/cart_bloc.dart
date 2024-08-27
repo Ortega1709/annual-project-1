@@ -1,6 +1,7 @@
 import 'package:e_commerce/core/utils/usecase.dart';
 import 'package:e_commerce/features/cart/domain/usecases/add_item_to_cart.dart';
 import 'package:e_commerce/features/cart/domain/usecases/add_order.dart';
+import 'package:e_commerce/features/cart/domain/usecases/confirm_order.dart';
 import 'package:e_commerce/features/cart/domain/usecases/delete_item_to_cart.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -19,17 +20,20 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   final GetCartItems _getCartItems;
   final AddOrder _addOrder;
   final SharedPreferences _sharedPreferences;
+  final ConfirmOrder _confirmOrder;
 
   CartBloc(
       {required AddItemToCart addItemToCart,
       required DeleteItemToCart deleteItemToCart,
       required GetCartItems getCartItems,
+      required ConfirmOrder confirmOrder,
       required AddOrder addOrder,
       required SharedPreferences sharedPreferences})
       : _getCartItems = getCartItems,
         _deleteItemToCart = deleteItemToCart,
         _addItemToCart = addItemToCart,
         _addOrder = addOrder,
+        _confirmOrder = confirmOrder,
         _sharedPreferences = sharedPreferences,
         super(CartInitial()) {
     on<CartEvent>((event, emit) {
@@ -40,6 +44,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<GetAllItemsEvent>(getAllItems);
     on<AddItemToCartEvent>(addItemsToCart);
     on<CartPaymentSuccessEvent>(cartPaymentSuccess);
+    on<CartConfirmOrderEvent>(confirmOrderFun);
   }
 
   Future<void> deleteItemsToCart(
@@ -90,6 +95,21 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     );
   }
 
+  Future<void> confirmOrderFun(
+    CartConfirmOrderEvent event,
+    Emitter<CartState> emit,
+  ) async {
+    emit(CartLoadingState());
+    final response = await _confirmOrder.invoke(
+      ConfirmOrderParams(commandeid: event.commandeid, reference: event.reference),
+    );
+
+    response.fold(
+      (err) => emit(CartConfirmOrderErrorState(err.message)),
+      (order) => emit(const CartConfirmOrderSuccessState()),
+    );
+  }
+
   Future<void> cartPaymentSuccess(
     CartPaymentSuccessEvent event,
     Emitter<CartState> emit,
@@ -107,7 +127,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
       response.fold(
         (err) => emit(const CartPaymentErrorState()),
-        (order) => emit(const CartPayementSuccessState()),
+        (order) => emit(CartPayementSuccessState(order)),
       );
     } else {
       emit(const CartPaymentErrorState());

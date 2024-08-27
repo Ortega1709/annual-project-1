@@ -11,7 +11,7 @@ class CommandeRepositoryImpl implements CommandeRepository {
   CommandeRepositoryImpl(this.commandeRemoteDataSource);
 
   @override
-  Future<Either<Failure, bool>> makeOrder({required MakeOrder makeOrder}) async {
+  Future<Either<Failure, String?>> makeOrder({required MakeOrder makeOrder}) async {
     try {
       final makeOrderModel = MakeOrderModel(
         references: makeOrder.references,
@@ -21,6 +21,15 @@ class CommandeRepositoryImpl implements CommandeRepository {
       );
 
       return right(await commandeRemoteDataSource.makeOrders(makeOrderModel: makeOrderModel));
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, bool>> confirmOrder({required String commandeid, required String reference}) async {
+    try {
+      return right(await commandeRemoteDataSource.confirmOrder(commandeid: commandeid, reference: reference));
     } on ServerException catch (e) {
       return left(Failure(e.message));
     }

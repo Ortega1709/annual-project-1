@@ -5,12 +5,12 @@ import 'package:e_commerce/features/cart/domain/entities/make_order.dart';
 import 'package:e_commerce/features/cart/domain/repositories/commande_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-class AddOrder implements UseCase<bool, AddOrderParams> {
+class AddOrder implements UseCase<String?, AddOrderParams> {
   final CommandeRepository commandeRepository;
   AddOrder(this.commandeRepository);
 
   @override
-  Future<Either<Failure, bool>> invoke(AddOrderParams params) {
+  Future<Either<Failure, String?>> invoke(AddOrderParams params) {
     return commandeRepository.makeOrder(
       makeOrder: MakeOrder(
         references: params.references,

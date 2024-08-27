@@ -17,6 +17,9 @@ class CartListScreen extends StatefulWidget {
 }
 
 class _CartListScreenState extends State<CartListScreen> {
+  String? commandeid;
+  double? confirmAmount;
+
   @override
   void initState() {
     super.initState();
@@ -25,6 +28,19 @@ class _CartListScreenState extends State<CartListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    confirmOrder({required BuildContext context, required String commandeid, required double amount}) async {
+      final response = await StripeService.instance.makePayment(
+        context,
+        amount,
+      );
+
+      if (response != '') {
+        context.read<CartBloc>().add(
+          CartConfirmOrderEvent(commandeid: commandeid, reference: response)
+        );
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Mon panier"),
@@ -37,7 +53,12 @@ class _CartListScreenState extends State<CartListScreen> {
           }
 
           if (state is CartPayementSuccessState) {
-            Messages.success("Paiement", 'Paiement réussi !', context);
+            // Messages.success("Paiement", 'Paiement réussi !', context);
+            context.read<CartBloc>().add(GetAllItemsEvent());
+          }
+
+          if (state is CartConfirmOrderSuccessState) {
+            Messages.success("Paiement", 'Paiement réussi', context);
             context.read<CartBloc>().add(GetAllItemsEvent());
           }
         },
@@ -55,7 +76,16 @@ class _CartListScreenState extends State<CartListScreen> {
           return const SizedBox.shrink();
         },
       ),
-      bottomNavigationBar: BlocBuilder<CartBloc, CartState>(
+      bottomNavigationBar: BlocConsumer<CartBloc, CartState>(
+        listener: (context, state) {
+          if (state is CartPayementSuccessState) {
+            setState(() {
+              commandeid = state.commandeid;
+            });
+
+            confirmOrder(context: context, commandeid: commandeid!, amount: confirmAmount!);
+          }
+        },
         builder: (context, state) {
           if (state is CartLoadedState) {
             return state.cart.isNotEmpty
@@ -64,18 +94,18 @@ class _CartListScreenState extends State<CartListScreen> {
                     child: MButton(
                       onPressed: () async {
                         final amount = await calculateTotalCart(state.cart);
-                        final response = await StripeService.instance
-                            .makePayment(context, amount);
+                        // ignore: use_build_context_synchronously
+                        context.read<CartBloc>().add(
+                              CartPaymentSuccessEvent(
+                                carts: state.cart,
+                                amount: amount,
+                                references: '',
+                              ),
+                            );
 
-                        if (response != '') {
-                          context.read<CartBloc>().add(
-                                CartPaymentSuccessEvent(
-                                  carts: state.cart,
-                                  amount: amount,
-                                  references: response,
-                                ),
-                              );
-                        }
+                        setState(() {
+                          confirmAmount = amount;
+                        });
                       },
                       text: 'Commander',
                     ),

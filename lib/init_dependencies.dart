@@ -14,6 +14,7 @@ import 'package:e_commerce/features/cart/domain/repositories/cart_repository.dar
 import 'package:e_commerce/features/cart/domain/repositories/commande_repository.dart';
 import 'package:e_commerce/features/cart/domain/usecases/add_item_to_cart.dart';
 import 'package:e_commerce/features/cart/domain/usecases/add_order.dart';
+import 'package:e_commerce/features/cart/domain/usecases/confirm_order.dart';
 import 'package:e_commerce/features/cart/domain/usecases/delete_item_to_cart.dart';
 import 'package:e_commerce/features/cart/domain/usecases/get_cart_items.dart';
 import 'package:e_commerce/features/cart/presentation/bloc/cart_bloc.dart';

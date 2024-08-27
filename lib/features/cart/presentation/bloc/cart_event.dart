@@ -38,7 +38,7 @@ final class DeleteItemToCartEvent extends CartEvent {
   List<Object?> get props => [index];
 }
 
-class CartPaymentSuccessEvent extends CartEvent {
+final class CartPaymentSuccessEvent extends CartEvent {
   final double amount;
   final String references;
   final List<Cart> carts;
@@ -51,4 +51,14 @@ class CartPaymentSuccessEvent extends CartEvent {
 
   @override
   List<Object?> get props => [amount, carts];
+}
+
+final class CartConfirmOrderEvent extends CartEvent {
+  final String commandeid;
+  final String reference;
+
+  const CartConfirmOrderEvent({required this.commandeid, required this.reference});
+
+  @override
+  List<Object?> get props => [commandeid, reference];
 }

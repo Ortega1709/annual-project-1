@@ -57,8 +57,24 @@ final class DeleteToCartSuccessState extends CartState {
 }
 
 final class CartPayementSuccessState extends CartState {
-  const CartPayementSuccessState();
+  final String? commandeid;
+  const CartPayementSuccessState(this.commandeid);
 
   @override
   List<Object?> get props => [];
+}
+
+final class CartConfirmOrderSuccessState extends CartState {
+  const CartConfirmOrderSuccessState();
+
+  @override
+  List<Object?> get props => [];
+}
+
+final class CartConfirmOrderErrorState extends CartState {
+  final String message;
+  const CartConfirmOrderErrorState(this.message);
+
+  @override
+  List<Object?> get props => [message];
 }
