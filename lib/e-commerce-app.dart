@@ -1,6 +1,7 @@
 import 'package:e_commerce/core/theme/app_theme.dart';
 import 'package:e_commerce/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:e_commerce/features/cart/presentation/bloc/cart_bloc.dart';
+import 'package:e_commerce/features/cart/presentation/bloc/order/order_bloc.dart';
 import 'package:e_commerce/init_dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +18,7 @@ class ECommerceApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => serviceLocator<ProductBloc>()),
         BlocProvider(create: (_) => serviceLocator<CartBloc>()),
+        BlocProvider(create: (_) => serviceLocator<OrderBloc>()),
         BlocProvider(create: (_) => serviceLocator<AuthBloc>()..add(const UserSessionCheckEvent())),
       ],
       child: BlocListener<AuthBloc, AuthState>(

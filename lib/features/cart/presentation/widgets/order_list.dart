@@ -4,14 +4,18 @@ import 'package:e_commerce/features/cart/domain/entities/order.dart';
 import 'package:e_commerce/features/cart/presentation/widgets/order_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
 class OrderList extends StatelessWidget {
   final List<Orderl> orders;
-  const OrderList({super.key, required this.orders});
+
+  const OrderList({
+    super.key,
+    required this.orders,
+  });
 
   @override
   Widget build(BuildContext context) {
-    print(orders.toList());
     return orders.isEmpty
         ? Center(
             child: Column(
@@ -55,7 +59,10 @@ class OrderList extends StatelessWidget {
               return OrderItem(
                 orderl: order,
                 isLandscape: true,
-                onPressed: () {},
+                onPressed: () {
+                  debugPrint('click: $order');
+                  context.push('/order-detail', extra: order);
+                },
               );
             },
           );

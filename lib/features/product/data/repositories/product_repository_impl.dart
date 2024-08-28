@@ -20,12 +20,21 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   @override
-  Future<Either<Failure, List<Product>>> getAllProductsByCategoryNum({
-    required int categoryNum,
-  }) async {
+  Future<Either<Failure, List<Product>>> getAllProductsOrderByName() async {
     try {
-      final products = await productRemoteDataSource
-          .getAllProductsByCategoryNum(categoryNum: categoryNum);
+      final products =
+          await productRemoteDataSource.getAllProductsOrderByName();
+      return right(products);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Product>>> getAllProductsOrderByPrice() async {
+    try {
+      final products =
+          await productRemoteDataSource.getAllProductsOrderByPrice();
       return right(products);
     } on ServerException catch (e) {
       return left(Failure(e.message));

@@ -1,6 +1,6 @@
-
 import 'package:e_commerce/core/errors/exception.dart';
 import 'package:e_commerce/features/cart/data/models/make_order_model.dart';
+import 'package:e_commerce/features/cart/data/models/order_detail_model.dart';
 import 'package:e_commerce/features/cart/data/models/order_model.dart';
 import 'package:e_commerce/features/cart/domain/entities/cart.dart';
 import 'package:pocketbase/pocketbase.dart';
@@ -12,6 +12,8 @@ abstract class CommandeRemoteDataSource {
     required String reference,
   });
   Future<List<OrderModel>> getAllOrderByUserId({required String userId});
+  Future<List<OrderDetailModel>> getAllDetailsOrderByOrderId(
+      {required String orderId});
 }
 
 class CommandeRemoteDataSourceImpl implements CommandeRemoteDataSource {
@@ -65,7 +67,8 @@ class CommandeRemoteDataSourceImpl implements CommandeRemoteDataSource {
   }
 
   @override
-  Future<bool> confirmOrder({required String commandeid, required String reference}) async {
+  Future<bool> confirmOrder(
+      {required String commandeid, required String reference}) async {
     try {
       // Update the 'commande' record with the provided reference
       await pocketBase
@@ -110,14 +113,29 @@ class CommandeRemoteDataSourceImpl implements CommandeRemoteDataSource {
     }
     return true;
   }
-  
+
   @override
   Future<List<OrderModel>> getAllOrderByUserId({required String userId}) async {
     try {
-      final orders = await pocketBase.collection('commande').getList(
-        filter: 'userid="$userId"'
-      );
+      final orders = await pocketBase
+          .collection('commande')
+          .getList(filter: 'userid="$userId"', sort: '-created');
       return orders.items.map((e) => OrderModel.fromJson(e)).toList();
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<List<OrderDetailModel>> getAllDetailsOrderByOrderId({
+    required String orderId,
+  }) async {
+    try {
+      final detailsOrder = await pocketBase
+          .collection('detailscommande')
+          .getList(filter: 'commandeid="$orderId"', expand: 'produitid');
+
+      return detailsOrder.items.map((e) => OrderDetailModel.fromJson(e)).toList();
     } catch (e) {
       throw ServerException(e.toString());
     }

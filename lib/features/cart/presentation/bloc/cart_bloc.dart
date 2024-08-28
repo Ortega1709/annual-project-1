@@ -1,10 +1,12 @@
 import 'package:e_commerce/core/utils/usecase.dart';
 import 'package:e_commerce/features/cart/domain/entities/order.dart';
+import 'package:e_commerce/features/cart/domain/entities/order_detail.dart';
 import 'package:e_commerce/features/cart/domain/usecases/add_item_to_cart.dart';
 import 'package:e_commerce/features/cart/domain/usecases/add_order.dart';
 import 'package:e_commerce/features/cart/domain/usecases/confirm_order.dart';
 import 'package:e_commerce/features/cart/domain/usecases/delete_item_to_cart.dart';
 import 'package:e_commerce/features/cart/domain/usecases/get_order_by_user_id.dart';
+import 'package:e_commerce/features/cart/domain/usecases/order_detail_by_order_id.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,18 +26,21 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   final SharedPreferences _sharedPreferences;
   final ConfirmOrder _confirmOrder;
   final GetOrderByUserId _getOrderByUserId;
+  final OrderDetailByOrderId _orderDetailByOrderId;
 
-  CartBloc(
-      {required AddItemToCart addItemToCart,
-      required DeleteItemToCart deleteItemToCart,
-      required GetCartItems getCartItems,
-      required ConfirmOrder confirmOrder,
-      required GetOrderByUserId getOrderByUserId,
-      required AddOrder addOrder,
-      required SharedPreferences sharedPreferences})
-      : _getCartItems = getCartItems,
+  CartBloc({
+    required AddItemToCart addItemToCart,
+    required DeleteItemToCart deleteItemToCart,
+    required GetCartItems getCartItems,
+    required ConfirmOrder confirmOrder,
+    required GetOrderByUserId getOrderByUserId,
+    required OrderDetailByOrderId orderDetailByOrderId,
+    required AddOrder addOrder,
+    required SharedPreferences sharedPreferences,
+  })  : _getCartItems = getCartItems,
         _getOrderByUserId = getOrderByUserId,
         _deleteItemToCart = deleteItemToCart,
+        _orderDetailByOrderId = orderDetailByOrderId,
         _addItemToCart = addItemToCart,
         _addOrder = addOrder,
         _confirmOrder = confirmOrder,

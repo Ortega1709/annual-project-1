@@ -2,7 +2,6 @@ import 'package:e_commerce/core/shared/widgets/m_button.dart';
 import 'package:e_commerce/core/shared/widgets/progress.dart';
 import 'package:e_commerce/core/theme/app_dimen.dart';
 import 'package:e_commerce/core/utils/messages.dart';
-import 'package:e_commerce/features/cart/domain/entities/cart.dart';
 import 'package:e_commerce/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:e_commerce/features/cart/presentation/widgets/order_list.dart';
 import 'package:e_commerce/init_dependencies.dart';
@@ -49,7 +48,9 @@ class _OrderListScreenState extends State<OrderListScreen> {
                 }
 
                 if (state is OrderLoadedState) {
-                  return OrderList(orders: state.orders);
+                  return OrderList(
+                    orders: state.orders,
+                  );
                 }
                 return const SizedBox.shrink();
               },

@@ -4,8 +4,7 @@ import 'package:fpdart/fpdart.dart';
 
 abstract interface class ProductRepository {
   Future<Either<Failure, List<Product>>> getAllProducts();
+  Future<Either<Failure, List<Product>>> getAllProductsOrderByPrice();
+  Future<Either<Failure, List<Product>>> getAllProductsOrderByName();
 
-  Future<Either<Failure, List<Product>>> getAllProductsByCategoryNum({
-    required int categoryNum,
-  });
 }

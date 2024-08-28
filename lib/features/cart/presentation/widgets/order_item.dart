@@ -17,6 +17,7 @@ class OrderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: onPressed,
       leading: const Icon(FontAwesomeIcons.cartArrowDown),
       title: Text(orderl.id),
       subtitle: Text(

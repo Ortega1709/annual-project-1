@@ -64,9 +64,15 @@ void _cart() {
     ..registerFactory(
       () => GetOrderByUserId(serviceLocator()),
     )
+    ..registerFactory(
+      () => OrderDetailByOrderId(serviceLocator()),
+    )
+    ..registerLazySingleton(
+        () => OrderBloc(orderDetailByOrderId: serviceLocator()))
     ..registerLazySingleton(
       () => CartBloc(
         getCartItems: serviceLocator(),
+        orderDetailByOrderId: serviceLocator(),
         getOrderByUserId: serviceLocator(),
         confirmOrder: serviceLocator(),
         addItemToCart: serviceLocator(),
@@ -89,11 +95,16 @@ void _product() {
       () => GetProducts(serviceLocator()),
     )
     ..registerFactory(
-      () => GetProductsByCategoryNum(serviceLocator()),
+      () => ProductsOrderByName(serviceLocator()),
+    )
+    ..registerFactory(
+      () => ProductsOrderByPrice(serviceLocator()),
     )
     ..registerLazySingleton(
       () => ProductBloc(
         getProducts: serviceLocator(),
+        productsOrderByName: serviceLocator(),
+        productsOrderByPrice: serviceLocator()
       ),
     );
 }
@@ -117,8 +128,9 @@ void _auth() {
     )
     ..registerLazySingleton(
       () => AuthBloc(
-          signIn: serviceLocator(),
-          signUp: serviceLocator(),
-          sharedPreferences: serviceLocator()),
+        signIn: serviceLocator(),
+        signUp: serviceLocator(),
+        sharedPreferences: serviceLocator(),
+      ),
     );
 }

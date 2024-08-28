@@ -1,14 +1,14 @@
-import 'package:e_commerce/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:e_commerce/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:e_commerce/features/auth/presentation/screens/sign_up_screen.dart';
+import 'package:e_commerce/features/cart/domain/entities/order.dart';
 import 'package:e_commerce/features/cart/presentation/screens/cart_list_screen.dart';
+import 'package:e_commerce/features/cart/presentation/screens/order_detail_screen.dart';
 import 'package:e_commerce/features/product/domain/entities/product.dart';
 import 'package:e_commerce/features/product/presentation/screens/product_details_screen.dart';
 import 'package:e_commerce/features/product/presentation/screens/product_discovery_list_screen.dart';
 import 'package:e_commerce/features/product/presentation/screens/product_search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -91,6 +91,19 @@ class AppRouterConfig {
                     systemNavigationBarColor: AppColor.backgroundColor,
                   ),
                   child: ProductSearchScreen());
+            },
+          ),
+          GoRoute(
+            path: '/order-detail',
+            builder: (context, state) {
+              final Orderl orderl = state.extra as Orderl;
+              return AnnotatedRegion(
+                value: const SystemUiOverlayStyle(
+                  statusBarColor: AppColor.backgroundColor,
+                  systemNavigationBarColor: AppColor.backgroundColor,
+                ),
+                child: OrderDetailScreen(order: orderl),
+              );
             },
           ),
           GoRoute(

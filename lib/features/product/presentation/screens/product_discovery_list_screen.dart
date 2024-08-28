@@ -44,6 +44,7 @@ class _ProductDiscoveryListScreenState
                           selectedSort = 0;
                           Navigator.pop(context);
                         });
+                        context.read<ProductBloc>().add(GetAllProductsEvent());
                       },
                       leading: const Icon(Icons.sort),
                       title: const Text("Par défaut"),
@@ -57,6 +58,9 @@ class _ProductDiscoveryListScreenState
                           selectedSort = 1;
                           Navigator.pop(context);
                         });
+                        context
+                            .read<ProductBloc>()
+                            .add(GetProductsOrderByName());
                       },
                       leading: const Icon(Icons.sort_by_alpha_rounded),
                       title: const Text("Ordre alphabétique"),
@@ -70,6 +74,9 @@ class _ProductDiscoveryListScreenState
                           selectedSort = 2;
                           Navigator.pop(context);
                         });
+                        context
+                            .read<ProductBloc>()
+                            .add(GetProductsOrderByPrice());
                       },
                       leading: const Icon(CupertinoIcons.money_euro),
                       title: const Text("Prix de produit"),

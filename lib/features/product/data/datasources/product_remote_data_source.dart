@@ -6,10 +6,8 @@ import 'package:pocketbase/pocketbase.dart';
 
 abstract interface class ProductRemoteDataSource {
   Future<List<ProductModel>> getAllProducts();
-  Future<List<ProductModel>> getAllProductsOrderBy({required String name});
-  Future<List<ProductModel>> getAllProductsByCategoryNum({
-    required int categoryNum,
-  });
+  Future<List<ProductModel>> getAllProductsOrderByPrice();
+  Future<List<ProductModel>> getAllProductsOrderByName();
 }
 
 class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
@@ -32,13 +30,33 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   }
 
   @override
-  Future<List<ProductModel>> getAllProductsByCategoryNum(
-      {required int categoryNum}) {
-    throw UnimplementedError();
+  Future<List<ProductModel>> getAllProductsOrderByName() async {
+    try {
+      final response = await pocketBase
+          .collection('descproduit')
+          .getList(expand: "categorynum",
+          sort: '+name'
+          );
+
+      return response.items.map((e) => ProductModel.fromJson(e)).toList();
+    } catch (e) {
+      log(e.toString());
+      throw ServerException(e.toString());
+    }
   }
 
   @override
-  Future<List<ProductModel>> getAllProductsOrderBy({required String name}) {
-    throw UnimplementedError();
+  Future<List<ProductModel>> getAllProductsOrderByPrice() async {
+    try {
+      final response = await pocketBase.collection('descproduit').getList(
+            expand: "categorynum",
+            sort: '+price'
+          );
+
+      return response.items.map((e) => ProductModel.fromJson(e)).toList();
+    } catch (e) {
+      log(e.toString());
+      throw ServerException(e.toString());
+    }
   }
 }

@@ -4,6 +4,7 @@ import 'package:e_commerce/features/cart/data/datasources/commande_remote_data_s
 import 'package:e_commerce/features/cart/data/models/make_order_model.dart';
 import 'package:e_commerce/features/cart/domain/entities/make_order.dart';
 import 'package:e_commerce/features/cart/domain/entities/order.dart';
+import 'package:e_commerce/features/cart/domain/entities/order_detail.dart';
 import 'package:e_commerce/features/cart/domain/repositories/commande_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
@@ -48,6 +49,18 @@ class CommandeRepositoryImpl implements CommandeRepository {
       );
       final orders = ordersModel.map((e) => e.toOrder()).toList();
       return right(orders);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<OrderDetail>>> getAllDetailsOrderByOrderId({required String orderId}) async {
+    try {
+      final orderDetailsModel = await commandeRemoteDataSource.getAllDetailsOrderByOrderId(orderId: orderId);
+      final orderDetails = orderDetailsModel.map((e) => e.toOrderDetail()).toList();
+
+      return right(orderDetails);
     } on ServerException catch (e) {
       return left(Failure(e.message));
     }
